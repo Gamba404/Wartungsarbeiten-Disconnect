@@ -18,6 +18,9 @@ public final class ReconnectConfig {
 	public boolean enabled = false;
 	public String server = "";
 	public int seconds = 15;
+	public boolean farmEnabled = false;
+	public int farmSeconds = 10;
+	public String farmCommand = "";
 
 	public static ReconnectConfig load() {
 		if (!Files.exists(PATH)) {
@@ -39,6 +42,14 @@ public final class ReconnectConfig {
 
 			if (config.seconds < 1) {
 				config.seconds = 15;
+			}
+
+			if (config.farmCommand == null) {
+				config.farmCommand = "";
+			}
+
+			if (config.farmSeconds < 1) {
+				config.farmSeconds = 10;
 			}
 
 			return config;

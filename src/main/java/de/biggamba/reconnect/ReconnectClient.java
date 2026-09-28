@@ -64,6 +64,44 @@ public final class ReconnectClient implements ClientModInitializer {
 													feedback("An. Ziel " + config.server + " nach " + config.seconds
 															+ " Sekunden in der Lobby.");
 													return 1;
+												}))))
+						.then(ClientCommands.literal("farm")
+								.then(ClientCommands.literal("on").executes(context -> {
+									config.farmEnabled = true;
+									config.save();
+
+									if (config.farmCommand.isBlank()) {
+										feedback("An. Es fehlt noch ein Befehl: "
+												+ "/reconnect farm <sekunden> <befehl>");
+									} else {
+										feedback("An. Danach nach " + config.farmSeconds + " Sekunden: /"
+												+ config.farmCommand);
+									}
+
+									return 1;
+								}))
+								.then(ClientCommands.literal("off").executes(context -> {
+									config.farmEnabled = false;
+									config.save();
+									feedback("Aus. Du bleibst auf dem CityBuild stehen.");
+									return 1;
+								}))
+								.then(ClientCommands.argument("sekunden", IntegerArgumentType.integer(1))
+										.then(ClientCommands.argument("befehl", StringArgumentType.greedyString())
+												.executes(context -> {
+													String command = StringArgumentType.getString(context, "befehl").trim();
+
+													if (command.startsWith("/")) {
+														command = command.substring(1);
+													}
+
+													config.farmSeconds = IntegerArgumentType.getInteger(context, "sekunden");
+													config.farmCommand = command;
+													config.farmEnabled = true;
+													config.save();
+													feedback("An. Danach nach " + config.farmSeconds + " Sekunden: /"
+															+ config.farmCommand);
+													return 1;
 												}))))));
 	}
 
@@ -71,7 +109,12 @@ public final class ReconnectClient implements ClientModInitializer {
 		String target = config.server.isBlank() ? "keins" : config.server;
 		feedback((config.enabled ? "An" : "Aus") + ", Ziel " + target + ", " + config.seconds
 				+ " Sekunden.");
-		feedback("/reconnect server <server> <sekunden>  |  /reconnect on  |  /reconnect off");
+
+		String farm = config.farmCommand.isBlank() ? "kein Befehl" : "/" + config.farmCommand
+				+ " nach " + config.farmSeconds + " Sekunden";
+		feedback("Farmwelt: " + (config.farmEnabled ? "an" : "aus") + ", " + farm + ".");
+		feedback("/reconnect server <server> <sekunden>  |  /reconnect farm <sekunden> <befehl>");
+		feedback("/reconnect on/off  |  /reconnect farm on/off");
 	}
 
 	static void feedback(String text) {
