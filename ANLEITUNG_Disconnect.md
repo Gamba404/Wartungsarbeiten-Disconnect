@@ -6,8 +6,8 @@ Beispiel in die Farmwelt.
 
 ## Einbauen
 
-1. Fabric Loader und Fabric API für Minecraft 26.2 installieren.
-2. `reconnect-26.2.jar` in den Ordner `mods` legen.
+1. Fabric Loader und Fabric API für Minecraft 26.3 installieren.
+2. `reconnect-26.3.jar` in den Ordner `mods` legen.
 3. Minecraft starten.
 
 ## Zurück auf den CityBuild

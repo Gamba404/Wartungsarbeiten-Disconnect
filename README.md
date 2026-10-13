@@ -84,5 +84,5 @@ leer ist und keine Lobby nennt. Auf einem CityBuild passiert sonst nichts.
 ./gradlew build
 ```
 
-Ergebnis: `build/libs/reconnect-26.2.jar`. Braucht Minecraft **26.2**, Fabric Loader ≥ 0.19.3,
+Ergebnis: `build/libs/reconnect-26.3.jar`. Braucht Minecraft **26.3**, Fabric Loader ≥ 0.19.3,
 Fabric API und JDK 25.
