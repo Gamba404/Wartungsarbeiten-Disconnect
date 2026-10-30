@@ -3,7 +3,7 @@
 	"id": "reconnect",
 	"version": "${version}",
 	"name": "Reconnect",
-	"description": "Steht dein Client in der PrimeBlocks-Lobby, zählt der Mod herunter und schickt dich per /server auf den CityBuild deiner Wahl zurück.",
+	"description": "Steht dein Client in der PrimeBlocks-Lobby, zählt der Mod herunter und schickt dich per /server auf den CityBuild deiner Wahl zurück — auf Wunsch danach weiter zu deinem Home-Punkt. Eingestellt wird alles in einem Fenster: /reconnect.",
 	"authors": [
 		"BIG_Gamba"
 	],

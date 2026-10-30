@@ -12,7 +12,10 @@ import de.biggamba.reconnect.mixin.PlayerTabOverlayAccessor;
 /**
  * Prüft zweimal pro Sekunde, ob der Tab-Footer die Lobby nennt. Tut er das lange genug,
  * kommt eine Zählung im Chat und danach ein /server auf den eingestellten CityBuild.
- * Optional folgt danach, sobald der CityBuild erreicht ist, noch ein zweiter Befehl.
+ * Optional folgt danach, sobald der CityBuild erreicht ist, noch der Sprung zum Home-Punkt.
+ *
+ * <p>Unverändert aus der Befehlsfassung übernommen — am Ablauf ändert das Fenster nichts, es
+ * füllt nur dieselben Werte.
  */
 public final class LobbyWatch {
 	private static final long CHECK_INTERVAL = 500L;
@@ -93,7 +96,7 @@ public final class LobbyWatch {
 			sent = true;
 			message("Teleportiere zu " + config.server);
 			connection.sendCommand("server " + config.server);
-			followPending = config.farmEnabled && !config.farmCommand.isBlank();
+			followPending = config.homeEnabled && !config.homeCommand().isBlank();
 			followDeadline = now + LANDING_TIMEOUT;
 			return;
 		}
@@ -111,17 +114,18 @@ public final class LobbyWatch {
 			lastCount = -1;
 		}
 
-		int left = config.farmSeconds - (int) ((now - landedAt) / 1000L);
+		int left = config.homeSeconds - (int) ((now - landedAt) / 1000L);
+		String command = config.homeCommand();
 
 		if (left <= 0) {
 			followPending = false;
 			landedAt = 0L;
-			message("Führe aus: /" + config.farmCommand);
-			connection.sendCommand(config.farmCommand);
+			message("Führe aus: /" + command);
+			connection.sendCommand(command);
 			return;
 		}
 
-		announce(left, "kommt /" + config.farmCommand);
+		announce(left, "kommt /" + command);
 	}
 
 	private void announce(int left, String what) {
