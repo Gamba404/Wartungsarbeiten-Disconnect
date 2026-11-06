@@ -7,6 +7,7 @@
 	"authors": [
 		"BIG_Gamba"
 	],
+	"icon": "assets/reconnect/icon.png",
 	"license": "MIT",
 	"environment": "client",
 	"entrypoints": {
